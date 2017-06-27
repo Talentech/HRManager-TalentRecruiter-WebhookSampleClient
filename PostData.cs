@@ -1,12 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting.Internal;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Xml.Serialization;
 
 namespace HRMTS.WebhookClient
@@ -14,11 +8,16 @@ namespace HRMTS.WebhookClient
     [Serializable]
     public class PostData
     {
+        public PostData()
+        {
+            Items = new List<PostItem>();
+        }
+
         private static string PostDataFile
         {
             get
             {
-                var path = System.AppDomain.CurrentDomain.BaseDirectory + @"\PostData.xml";
+                var path = AppDomain.CurrentDomain.BaseDirectory + @"\PostData.xml";
 
                 return path;
             }
@@ -26,16 +25,11 @@ namespace HRMTS.WebhookClient
 
         public List<PostItem> Items { get; set; }
 
-        public PostData()
-        {
-            Items = new List<PostItem>();
-        }
-
         public string ToXml()
         {
             try
             {
-                var xmlSerializer = new XmlSerializer(this.GetType());
+                var xmlSerializer = new XmlSerializer(GetType());
 
                 using (var textWriter = new StringWriter())
                 {
@@ -58,7 +52,7 @@ namespace HRMTS.WebhookClient
 
                 var textReader = new StringReader(xml);
 
-                return (PostData)xmlSerializer.Deserialize(textReader);
+                return (PostData) xmlSerializer.Deserialize(textReader);
             }
             catch
             {
@@ -75,7 +69,7 @@ namespace HRMTS.WebhookClient
         {
             return !File.Exists(PostDataFile)
                 ? new PostData()
-                : PostData.FromXml(File.ReadAllText(PostDataFile));
+                : FromXml(File.ReadAllText(PostDataFile));
         }
     }
 
