@@ -1,0 +1,21 @@
+﻿<div style="background-color:darkslateblue;color:white;font-size:24px;padding:20px;">
+    <b>Http Post - application/json</b>
+</div>
+<div>
+    @foreach (var item in ViewBag.Output)
+    {
+        <div style="padding:10px;border:1px solid gray;margin:5px;background-color:wheat;">
+            <b>Body</b>
+            <hr />
+            @item.Body
+            <br />
+            <br />
+            <b>Headers</b>
+            <hr />
+            @foreach (var header in @item.Headers)
+            {
+                <div>@header.Key: @header.Value</div>
+            }
+        </div>
+    }
+</div>
