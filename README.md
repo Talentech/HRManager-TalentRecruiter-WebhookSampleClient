@@ -1,4 +1,4 @@
 # WebhookPostClient
-for posting to the url:
+for posting json content to the url:
 http://localhost:<portnr>/home/post
 
